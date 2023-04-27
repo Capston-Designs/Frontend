@@ -10,7 +10,7 @@ import 'package:path_provider/path_provider.dart';
 
 class Voice2Screen extends StatefulWidget {
   const Voice2Screen({super.key});
-
+// hi
   // 상태 관리
   @override
   _VoiceScreen2State createState() => _VoiceScreen2State();
