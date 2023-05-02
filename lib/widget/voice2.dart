@@ -52,7 +52,7 @@ class _VoiceScreen2State extends State<Voice2Screen>{
     final picker = ImagePicker();
     Future getImage(ImageSource source) async {
       final image = await picker.pickImage(source: source);
-
+      //image 오류요
       // print("실행중");
       if (image == null) return;
       File? img = File(image.path);
