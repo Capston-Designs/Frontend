@@ -64,6 +64,7 @@ dependencies:
   flutter_tts:
   path: ^1.8.2
   path_provider: ^2.0.14
+  dio: ^5.1.1
 
   # flutter_svg: ^0.17.4
   # 이미지 추가
