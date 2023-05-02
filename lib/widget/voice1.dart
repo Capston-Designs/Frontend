@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:bot_toast/bot_toast.dart';
 
 /* camera button */
 
@@ -29,6 +31,9 @@ class _VoiceScreen1State extends State<Voice1Screen>{
 
       setState(() {
         _image = File(pickedFile!.path);
+        // _image == "null"
+        //   ? getImage(ImageSource.camera)
+        //   : upload(_image);
       });
     }
 
@@ -48,7 +53,8 @@ class _VoiceScreen1State extends State<Voice1Screen>{
                     child: TextButton(
                       child: const Text(" "),
                       onPressed: () {
-                        getImage(ImageSource.camera);
+                        // getImage(ImageSource.camera);
+                        uploadImageToServer();
                       }
                     ),
                   ),
@@ -78,13 +84,6 @@ class _VoiceScreen1State extends State<Voice1Screen>{
                           //not speaking
                       }
                   }, 
-                  // 버튼
-                  // child: Text("Text to Speech"),
-                  // child: const Icon(
-                  //     Icons.camera,
-                  //     size: 18,
-                  //   ),
-                  // ),
                 ),
               ),
               ),
@@ -93,7 +92,30 @@ class _VoiceScreen1State extends State<Voice1Screen>{
       ),
     );
   }
+}
 
-      
-        
+Future<void> uploadImageToServer() async {
+  final picker = ImagePicker();
+  final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+  if (pickedFile != null) {
+    File imageFile = File(pickedFile.path);
+    // String fileName = imageFile.path.split('/').last;
+
+    FormData formData = FormData.fromMap({
+      "image": await MultipartFile.fromFile(imageFile.path),
+    });
+
+    try {
+      Dio dio = new Dio();
+      dio.options.headers['Content-Type'] = 'application/json';
+      Response response = await dio.post(
+          'https://port-0-backend-5o1j2llh1j01ao.sel4.cloudtype.app/BraiileImg/',
+          data: formData
+      );
+      print(response);
+    } catch (e) {
+      print(e);
+    }
+  }
 }
