@@ -84,13 +84,6 @@ class _VoiceScreen2State extends State<Voice2Screen>{
                           //not speaking
                       }
                   }, 
-                  // 버튼
-                  // child: Text("Text to Speech"),
-                  // child: const Icon(
-                  //     Icons.camera,
-                  //     size: 18,
-                  //   ),
-                  // ),
                 ),
               ),
               ),
