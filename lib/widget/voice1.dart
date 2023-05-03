@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -16,15 +17,18 @@ class Voice1Screen extends StatefulWidget {
   _VoiceScreen1State createState() => _VoiceScreen1State();
 }
 
+String text1 = ' ';
 
 class _VoiceScreen1State extends State<Voice1Screen>{
   FlutterTts ftts = FlutterTts();
   late File _image;
   final picker = ImagePicker();
 
+
   @override 
-  Widget build(BuildContext context) {
+  Positioned build(BuildContext context)  {
     final TextEditingController controller = TextEditingController(text: "안녕하세요");
+    
 
     Future getImage(ImageSource imageSource) async{
       final pickedFile = await picker.getImage(source: imageSource);
@@ -52,12 +56,30 @@ class _VoiceScreen1State extends State<Voice1Screen>{
                   height: 120,
                     child: TextButton(
                       child: const Text(" "),
-                      onPressed: () {
+                      onPressed: () async {
                         // getImage(ImageSource.camera);
                         uploadImageToServer();
+                        // text1 = await getTextFromServer();
+                        // print('text : '+text1);
                       }
                     ),
                   ),
+              ),
+              // 슬라이드 추가하기
+              Positioned(
+                top: 20,
+                left: 20,
+                child: SizedBox(
+                  width: 400,
+                  height: 400,
+                  child: Text(''+text1,
+                  style: const TextStyle(
+                        fontFamily: 'SF Pro Text', 
+                        fontSize: 20, 
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black),
+                  ),
+                ),
               ),
 
               Positioned(
@@ -117,5 +139,20 @@ Future<void> uploadImageToServer() async {
     } catch (e) {
       print(e);
     }
+    text1 = await getTextFromServer();
+    print('text : '+text1);
   }
 }
+
+Future<String> getTextFromServer() async {
+   try {
+     Dio dio = new Dio();
+     Response response = await dio.get('https://port-0-backend-5o1j2llh1j01ao.sel4.cloudtype.app/BraiileImg/search/');
+    //  var jsonbody = json.decode(response.data);
+    //  return jsonbody['answer'];
+    return response.data.toString();
+   } catch (e) {
+     print(e);
+     return 'error';
+   }
+ }

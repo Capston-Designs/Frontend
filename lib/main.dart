@@ -28,3 +28,8 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
+// void _reloadApp(BuildContext context) {
+//   runApp(MyApp());
+// }

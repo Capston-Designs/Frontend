@@ -22,6 +22,7 @@ class Voice2Screen extends StatefulWidget {
   _VoiceScreen2State createState() => _VoiceScreen2State();
 }
 
+String text1 ='';
 
 class _VoiceScreen2State extends State<Voice2Screen>{
   FlutterTts ftts = FlutterTts();
@@ -36,7 +37,7 @@ class _VoiceScreen2State extends State<Voice2Screen>{
 
   @override 
   Widget build(BuildContext context) {
-    final TextEditingController controller = TextEditingController(text: "안녕하세요");
+    final TextEditingController controller = TextEditingController(text: text1);
     final picker = ImagePicker();
 
     return Positioned(
@@ -58,6 +59,22 @@ class _VoiceScreen2State extends State<Voice2Screen>{
                       }
                     ),
                   ),
+              ),
+
+              Positioned(
+                top: 20,
+                left: 20,
+                child: SizedBox(
+                  width: 350,
+                  height: 600,
+                  child: Text(''+text1,
+                  style: const TextStyle(
+                        fontFamily: 'SF Pro Text', 
+                        fontSize: 20, 
+                        fontWeight: FontWeight.normal,
+                        color: Colors.black),
+                  ),
+                ),
               ),
 
               Positioned(
@@ -103,7 +120,7 @@ class _VoiceScreen2State extends State<Voice2Screen>{
 
 Future<void> uploadImageToServer() async {
   final picker = ImagePicker();
-  final pickedFile = await picker.getImage(source: ImageSource.camera);
+  final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
   if (pickedFile != null) {
     File imageFile = File(pickedFile.path);
@@ -117,12 +134,28 @@ Future<void> uploadImageToServer() async {
       Dio dio = new Dio();
       dio.options.headers['Content-Type'] = 'application/json';
       Response response = await dio.post(
-          'https://port-0-backend-5o1j2llh1j01ao.sel4.cloudtype.app/BraiileImg/',
+          'https://bfe7-2001-e60-3164-a6bc-11a2-1047-57b9-919c.ngrok-free.app/Korean/',
           data: formData
       );
       print(response);
     } catch (e) {
       print(e);
     }
+    text1 = await getTextFromServer();
+    print('text : '+text1);
+    // _reloadApp();
   }
 }
+
+Future<String> getTextFromServer() async {
+   try {
+     Dio dio = new Dio();
+     Response response = await dio.get('https://bfe7-2001-e60-3164-a6bc-11a2-1047-57b9-919c.ngrok-free.app/Korean/translate');
+    //  var jsonbody = json.decode(response.data);
+    //  return jsonbody['answer'];
+    return response.data.toString();
+   } catch (e) {
+     print(e);
+     return 'error';
+   }
+ }
