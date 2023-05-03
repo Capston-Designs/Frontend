@@ -1,44 +1,46 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart' as path;
-import 'package:path_provider/path_provider.dart';
-import 'package:http/http.dart' as http;
-import 'package:http_parser/http_parser.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:dio/dio.dart';
+import 'package:bot_toast/bot_toast.dart';
 
 /* camera button */
 
 class Voice2Screen extends StatefulWidget {
   const Voice2Screen({super.key});
-// hihi
+
   // 상태 관리
   @override
   _VoiceScreen2State createState() => _VoiceScreen2State();
 }
 
-String text1 ='';
+String text1 = ' ';
 
 class _VoiceScreen2State extends State<Voice2Screen>{
   FlutterTts ftts = FlutterTts();
-  // late File _image;
-  final ImagePicker picker = ImagePicker();
-  File? _image;
-  
-  get path => null;
-
-  
+  late File _image;
+  final picker = ImagePicker();
 
 
   @override 
-  Widget build(BuildContext context) {
+  Positioned build(BuildContext context)  {
     final TextEditingController controller = TextEditingController(text: text1);
-    final picker = ImagePicker();
+    
+
+    Future getImage(ImageSource imageSource) async{
+      final pickedFile = await picker.getImage(source: imageSource);
+
+      setState(() {
+        _image = File(pickedFile!.path);
+        // _image == "null"
+        //   ? getImage(ImageSource.camera)
+        //   : upload(_image);
+      });
+    }
+
 
     return Positioned(
       child: Container(
@@ -55,18 +57,21 @@ class _VoiceScreen2State extends State<Voice2Screen>{
                     child: TextButton(
                       child: const Text(" "),
                       onPressed: () async {
+                        // getImage(ImageSource.camera);
                         uploadImageToServer();
+                        // text1 = await getTextFromServer();
+                        // print('text : '+text1);
                       }
                     ),
                   ),
               ),
-
+              // 슬라이드 추가하기
               Positioned(
                 top: 20,
                 left: 20,
                 child: SizedBox(
                   width: 350,
-                  height: 600,
+                  height: 400,
                   child: Text(''+text1,
                   style: const TextStyle(
                         fontFamily: 'SF Pro Text', 
@@ -101,13 +106,6 @@ class _VoiceScreen2State extends State<Voice2Screen>{
                           //not speaking
                       }
                   }, 
-                  // 버튼
-                  // child: Text("Text to Speech"),
-                  // child: const Icon(
-                  //     Icons.camera,
-                  //     size: 18,
-                  //   ),
-                  // ),
                 ),
               ),
               ),
@@ -143,7 +141,6 @@ Future<void> uploadImageToServer() async {
     }
     text1 = await getTextFromServer();
     print('text : '+text1);
-    // _reloadApp();
   }
 }
 

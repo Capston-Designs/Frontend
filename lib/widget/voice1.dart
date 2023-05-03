@@ -27,7 +27,7 @@ class _VoiceScreen1State extends State<Voice1Screen>{
 
   @override 
   Positioned build(BuildContext context)  {
-    final TextEditingController controller = TextEditingController(text: "안녕하세요");
+    final TextEditingController controller = TextEditingController(text: text1);
     
 
     Future getImage(ImageSource imageSource) async{
@@ -70,7 +70,7 @@ class _VoiceScreen1State extends State<Voice1Screen>{
                 top: 20,
                 left: 20,
                 child: SizedBox(
-                  width: 400,
+                  width: 350,
                   height: 400,
                   child: Text(''+text1,
                   style: const TextStyle(
@@ -118,7 +118,7 @@ class _VoiceScreen1State extends State<Voice1Screen>{
 
 Future<void> uploadImageToServer() async {
   final picker = ImagePicker();
-  final pickedFile = await picker.getImage(source: ImageSource.camera);
+  final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
   if (pickedFile != null) {
     File imageFile = File(pickedFile.path);
@@ -132,7 +132,7 @@ Future<void> uploadImageToServer() async {
       Dio dio = new Dio();
       dio.options.headers['Content-Type'] = 'application/json';
       Response response = await dio.post(
-          'https://port-0-backend-5o1j2llh1j01ao.sel4.cloudtype.app/BraiileImg/',
+          'https://bfe7-2001-e60-3164-a6bc-11a2-1047-57b9-919c.ngrok-free.app/Braille/',
           data: formData
       );
       print(response);
@@ -147,7 +147,7 @@ Future<void> uploadImageToServer() async {
 Future<String> getTextFromServer() async {
    try {
      Dio dio = new Dio();
-     Response response = await dio.get('https://port-0-backend-5o1j2llh1j01ao.sel4.cloudtype.app/BraiileImg/search/');
+     Response response = await dio.get('https://bfe7-2001-e60-3164-a6bc-11a2-1047-57b9-919c.ngrok-free.app/Braille/translate');
     //  var jsonbody = json.decode(response.data);
     //  return jsonbody['answer'];
     return response.data.toString();
