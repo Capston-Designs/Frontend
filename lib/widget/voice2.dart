@@ -90,15 +90,12 @@ class _VoiceScreen2State extends State<Voice2Screen>{
 Future<void> uploadImageToServer() async {
   final picker = ImagePicker();
   final pickedFile = await picker.getImage(source: ImageSource.camera);
-
   if (pickedFile != null) {
     File imageFile = File(pickedFile.path);
     // String fileName = imageFile.path.split('/').last;
-
     FormData formData = FormData.fromMap({
       "image": await MultipartFile.fromFile(imageFile.path),
     });
-
     try {
       Dio dio = new Dio();
       dio.options.headers['Content-Type'] = 'application/json';
@@ -113,13 +110,13 @@ Future<void> uploadImageToServer() async {
   }
 }
 
-Future<String?> getTextFromServer() async {
-  try {
-    Dio dio = new Dio();
-    Response response = await dio.get('https://port-0-backend-5o1j2llh1j01ao.sel4.cloudtype.app/BraiileImg/');
-    return response.data.toString();
-  } catch (e) {
-    print(e);
-    return null;
-  }
-}
+// Future<String?> getTextFromServer() async {
+//   try {
+//     Dio dio = new Dio();
+//     Response response = await dio.get('https://port-0-backend-5o1j2llh1j01ao.sel4.cloudtype.app/BraiileImg/');
+//     return response.data.toString();
+//   } catch (e) {
+//     print(e);
+//     return null;
+//   }
+// }
