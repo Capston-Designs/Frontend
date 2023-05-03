@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:bot_toast/bot_toast.dart';
 
 /* camera button */
 
@@ -55,10 +54,22 @@ class _VoiceScreen1State extends State<Voice1Screen>{
                       onPressed: () {
                         // getImage(ImageSource.camera);
                         uploadImageToServer();
+                        // String getText = getTextFromServer();
                       }
                     ),
                   ),
               ),
+              
+              // 슬라이드 추가하기
+              const Positioned(
+                top: 440,
+                left: 200,
+                child: SizedBox(
+                  width: 400,
+                  height: 400,
+                  child: Text("d"),
+                  ),
+                ),
 
               Positioned(
                 top: 440,
@@ -117,5 +128,17 @@ Future<void> uploadImageToServer() async {
     } catch (e) {
       print(e);
     }
+  }
+}
+
+
+Future<String?> getTextFromServer() async {
+  try {
+    Dio dio = new Dio();
+    Response response = await dio.get('https://port-0-backend-5o1j2llh1j01ao.sel4.cloudtype.app/BraiileImg/');
+    return response.data.toString();
+  } catch (e) {
+    print(e);
+    return null;
   }
 }

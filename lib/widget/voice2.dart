@@ -1,16 +1,9 @@
-import 'dart:convert';
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart' as path;
-import 'package:path_provider/path_provider.dart';
-import 'package:http/http.dart' as http;
-import 'package:http_parser/http_parser.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:dio/dio.dart';
 
 /* camera button */
 
@@ -117,5 +110,16 @@ Future<void> uploadImageToServer() async {
     } catch (e) {
       print(e);
     }
+  }
+}
+
+Future<String?> getTextFromServer() async {
+  try {
+    Dio dio = new Dio();
+    Response response = await dio.get('https://port-0-backend-5o1j2llh1j01ao.sel4.cloudtype.app/BraiileImg/');
+    return response.data.toString();
+  } catch (e) {
+    print(e);
+    return null;
   }
 }
