@@ -7,7 +7,7 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:bot_toast/bot_toast.dart';
 
-/* camera button */
+/* 점자 */
 
 class Voice1Screen extends StatefulWidget {
   const Voice1Screen({super.key});
