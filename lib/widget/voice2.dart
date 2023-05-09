@@ -116,6 +116,7 @@ class _VoiceScreen2State extends State<Voice2Screen>{
   }
 }
 
+// post
 Future<void> uploadImageToServer() async {
   final picker = ImagePicker();
   final pickedFile = await picker.getImage(source: ImageSource.gallery);
@@ -144,6 +145,8 @@ Future<void> uploadImageToServer() async {
   }
 }
 
+
+// get
 Future<String> getTextFromServer() async {
    try {
      Dio dio = new Dio();
