@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:bot_toast/bot_toast.dart';
+// import 'package:bot_toast/bot_toast.dart';
 
 /* 묵자 */
 
@@ -59,6 +59,7 @@ class _VoiceScreen2State extends State<Voice2Screen>{
                       onPressed: () async {
                         // getImage(ImageSource.camera);
                         uploadImageToServer();
+                        
                         // text1 = await getTextFromServer();
                         // print('text : '+text1);
                       }
@@ -133,7 +134,7 @@ Future<void> uploadImageToServer() async {
       Dio dio = new Dio();
       dio.options.headers['Content-Type'] = 'application/json';
       Response response = await dio.post(
-          'https://bfe7-2001-e60-3164-a6bc-11a2-1047-57b9-919c.ngrok-free.app/Korean/',
+          'https://a2c9-14-45-91-84.ngrok-free.app/Korean',
           data: formData
       );
       print(response);
@@ -141,6 +142,11 @@ Future<void> uploadImageToServer() async {
       print(e);
     }
     text1 = await getTextFromServer();
+    // String textr = text1.substring(9,text1.indexOf('h'));
+    // text1 = textr;
+    // String textf = splitText(text1) as String;
+
+    splitText(text1);
     print('text : '+text1);
   }
 }
@@ -148,14 +154,22 @@ Future<void> uploadImageToServer() async {
 
 // get
 Future<String> getTextFromServer() async {
-   try {
-     Dio dio = new Dio();
-     Response response = await dio.get('https://bfe7-2001-e60-3164-a6bc-11a2-1047-57b9-919c.ngrok-free.app/Korean/translate');
-    //  var jsonbody = json.decode(response.data);
-    //  return jsonbody['answer'];
-    return response.data.toString();
-   } catch (e) {
-     print(e);
-     return 'error';
-   }
- }
+  try {
+    Dio dio = new Dio();
+    Response response = await dio.get('https://a2c9-14-45-91-84.ngrok-free.app/Korean/translate');
+  //  var jsonbody = json.decode(response.data);
+  //  return jsonbody['answer'];
+  return response.data.toString();
+  } catch (e) {
+    print(e);
+    return 'error';
+  }
+}
+
+// split func
+Future<String> splitText(String texts) async {
+  // String textr = texts.substring(9,texts.indexOf('h'));
+  String textr = texts.substring(1,3);
+  text1 = textr;
+  return text1;
+}

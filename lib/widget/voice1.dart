@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:bot_toast/bot_toast.dart';
+// import 'package:bot_toast/bot_toast.dart';
 
 /* 점자 */
 
@@ -65,6 +65,7 @@ class _VoiceScreen1State extends State<Voice1Screen>{
                     ),
                   ),
               ),
+
               // 슬라이드 추가하기
               Positioned(
                 top: 20,
@@ -72,7 +73,10 @@ class _VoiceScreen1State extends State<Voice1Screen>{
                 child: SizedBox(
                   width: 350,
                   height: 400,
-                  child: Text(''+text1,
+                  // String textf = text1.substring(6);
+                  // String textf = text1.substring(6,11); 6-11까지
+                  // String textf = text1.substring(11, str.indexOf(''')); 11부터 '까지
+                  child: Text(''+text1, //'$text1'
                   style: const TextStyle(
                         fontFamily: 'SF Pro Text', 
                         fontSize: 20, 
@@ -132,7 +136,7 @@ Future<void> uploadImageToServer() async {
       Dio dio = new Dio();
       dio.options.headers['Content-Type'] = 'application/json';
       Response response = await dio.post(
-          'https://bfe7-2001-e60-3164-a6bc-11a2-1047-57b9-919c.ngrok-free.app/Braille/',
+          'https://a2c9-14-45-91-84.ngrok-free.app/Braille',
           data: formData
       );
       print(response);
@@ -140,19 +144,31 @@ Future<void> uploadImageToServer() async {
       print(e);
     }
     text1 = await getTextFromServer();
+    // String textr = text1.substring(9,text1.indexOf('h'));
+    // text1 = textr;
+    // String textf = splitText(text1) as String;
+
+    splitText(text1);
     print('text : '+text1);
   }
 }
 
 Future<String> getTextFromServer() async {
-   try {
-     Dio dio = new Dio();
-     Response response = await dio.get('https://bfe7-2001-e60-3164-a6bc-11a2-1047-57b9-919c.ngrok-free.app/Braille/translate');
-    //  var jsonbody = json.decode(response.data);
-    //  return jsonbody['answer'];
-    return response.data.toString();
-   } catch (e) {
-     print(e);
-     return 'error';
-   }
- }
+  try {
+    Dio dio = new Dio();
+    Response response = await dio.get('https://a2c9-14-45-91-84.ngrok-free.app/Braille/translate');
+  //  var jsonbody = json.decode(response.data);
+  //  return jsonbody['answer'];
+  return response.data.toString();
+  } catch (e) {
+    print(e);
+    return 'error';
+  }
+}
+
+Future<String> splitText(String texts) async {
+// String textr = texts.substring(9,texts.indexOf('h'));
+String textr = texts.substring(1,3);
+text1 = textr;
+return text1;
+}
