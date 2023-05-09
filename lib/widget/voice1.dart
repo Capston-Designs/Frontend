@@ -58,7 +58,9 @@ class _VoiceScreen1State extends State<Voice1Screen>{
                       child: const Text(" "),
                       onPressed: () async {
                         // getImage(ImageSource.camera);
-                        uploadImageToServer();
+                        setState(() {
+                          uploadImageToServer();
+                        });
                         // text1 = await getTextFromServer();
                         // print('text : '+text1);
                       }
@@ -136,7 +138,7 @@ Future<void> uploadImageToServer() async {
       Dio dio = new Dio();
       dio.options.headers['Content-Type'] = 'application/json';
       Response response = await dio.post(
-          'https://a2c9-14-45-91-84.ngrok-free.app/Braille',
+          'https://a8a1-14-45-91-84.ngrok-free.app/Braille/',
           data: formData
       );
       print(response);
@@ -156,7 +158,7 @@ Future<void> uploadImageToServer() async {
 Future<String> getTextFromServer() async {
   try {
     Dio dio = new Dio();
-    Response response = await dio.get('https://a2c9-14-45-91-84.ngrok-free.app/Braille/translate');
+    Response response = await dio.get('https://a8a1-14-45-91-84.ngrok-free.app/Braille/translate');
   //  var jsonbody = json.decode(response.data);
   //  return jsonbody['answer'];
   return response.data.toString();
@@ -167,8 +169,8 @@ Future<String> getTextFromServer() async {
 }
 
 Future<String> splitText(String texts) async {
-// String textr = texts.substring(9,texts.indexOf('h'));
-String textr = texts.substring(1,3);
-text1 = textr;
-return text1;
+  String textr = texts.substring(10,texts.indexOf(","));
+  textr = textr.substring(0,textr.length-1);
+  text1 = textr;
+  return text1;
 }

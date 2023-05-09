@@ -168,8 +168,8 @@ Future<String> getTextFromServer() async {
 
 // split func
 Future<String> splitText(String texts) async {
-  // String textr = texts.substring(9,texts.indexOf('h'));
-  String textr = texts.substring(1,3);
+  String textr = texts.substring(10,texts.indexOf(","));
+  textr = textr.substring(0,textr.length-1);
   text1 = textr;
   return text1;
 }
