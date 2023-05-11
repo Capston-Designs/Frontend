@@ -5,6 +5,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:refresh/refresh.dart';
+import 'package:get/get.dart' as GET;
 // import 'package:bot_toast/bot_toast.dart';
 
 /* 점자 */
@@ -22,6 +24,34 @@ class _VoiceScreen1State extends State<Voice1Screen>{
   FlutterTts ftts = FlutterTts();
   late File _image;
   final picker = ImagePicker();
+
+  final RefreshController _refreshController = RefreshController(initialRefresh: false);
+
+  //새로고침
+  void _onRefresh() async{
+    await Future.delayed(Duration(milliseconds: 4000)); //4초를 기다린 후 새로고침한다.
+    // text field
+    Positioned(
+      top: 20,
+      left: 20,
+      child: SizedBox(
+        width: 350,
+        height: 400,
+        // String textf = text1.substring(6);
+        // String textf = text1.substring(6,11); 6-11까지
+        // String textf = text1.substring(11, str.indexOf(''')); 11부터 '까지
+        child: Text('$text1', //'$text1' or ''+text1
+        style: const TextStyle(
+              fontFamily: 'SF Pro Text', 
+              fontSize: 20, 
+              fontWeight: FontWeight.normal,
+              color: Colors.black),
+        ),
+      ),
+    );
+    _refreshController.refreshCompleted();
+  }
+
 
 
   @override 
@@ -59,6 +89,7 @@ class _VoiceScreen1State extends State<Voice1Screen>{
                         // getImage(ImageSource.camera);
                         setState(() {
                           uploadImageToServer();
+                          _onRefresh();
                         });
                         // text1 = await getTextFromServer();
                         // print('text : '+text1);
@@ -67,7 +98,7 @@ class _VoiceScreen1State extends State<Voice1Screen>{
                   ),
               ),
 
-              // 슬라이드 추가하기
+              // // text field
               Positioned(
                 top: 20,
                 left: 20,
@@ -138,39 +169,46 @@ Future<void> uploadImageToServer() async {
       Dio dio = new Dio();
       dio.options.headers['Content-Type'] = 'application/json';
       Response response = await dio.post(
-          'https://a8a1-14-45-91-84.ngrok-free.app/Braille/',
+          'https://8226-211-199-34-171.ngrok-free.app/api/braille/',
           data: formData
       );
+      text1 = response.toString();
       print(response);
     } catch (e) {
       print(e);
     }
-    text1 = await getTextFromServer();
+    // text1 = await getTextFromServer();
+
     // String textr = text1.substring(9,text1.indexOf('h'));
     // text1 = textr;
     // String textf = splitText(text1) as String;
 
-    splitText(text1);
-    print('text : '+text1);
+    // splitText(text1);
+    // print('text : '+text1);
+    // update(text1);
   }
 }
 
-Future<String> getTextFromServer() async {
-  try {
-    Dio dio = new Dio();
-    Response response = await dio.get('https://a8a1-14-45-91-84.ngrok-free.app/Braille/translate');
-  //  var jsonbody = json.decode(response.data);
-  //  return jsonbody['answer'];
-  return response.data.toString();
-  } catch (e) {
-    print(e);
-    return 'error';
-  }
-}
+// void update(String texts) {
+//   text1 = texts;
+// }
 
-Future<String> splitText(String texts) async {
-  String textr = texts.substring(10,texts.indexOf(","));
-  textr = textr.substring(0,textr.length-1);
-  text1 = textr;
-  return text1;
-}
+// Future<String> getTextFromServer() async {
+//   try {
+//     Dio dio = new Dio();
+//     Response response = await dio.get('https://a8a1-14-45-91-84.ngrok-free.app/Braille/translate');
+//   //  var jsonbody = json.decode(response.data);
+//   //  return jsonbody['answer'];
+//   return response.data.toString();
+//   } catch (e) {
+//     print(e);
+//     return 'error';
+//   }
+// }
+
+// Future<String> splitText(String texts) async {
+//   String textr = texts.substring(10,texts.indexOf(","));
+//   textr = textr.substring(0,textr.length-1);
+//   text1 = textr;
+//   return text1;
+// }

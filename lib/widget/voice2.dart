@@ -117,6 +117,15 @@ class _VoiceScreen2State extends State<Voice2Screen>{
   }
 }
 
+
+// split func
+// Future<String> splitText(String texts) async {
+//   String textr = texts.substring(10,texts.indexOf(","));
+//   textr = textr.substring(0,textr.length-1);
+//   text1 = textr;
+//   return text1;
+// }
+
 // post
 Future<void> uploadImageToServer() async {
   final picker = ImagePicker();
@@ -134,42 +143,36 @@ Future<void> uploadImageToServer() async {
       Dio dio = new Dio();
       dio.options.headers['Content-Type'] = 'application/json';
       Response response = await dio.post(
-          'https://a2c9-14-45-91-84.ngrok-free.app/Korean',
+          'https://8226-211-199-34-171.ngrok-free.app/api/korean/',
           data: formData
       );
+      text1 = response.toString();
       print(response);
     } catch (e) {
       print(e);
     }
-    text1 = await getTextFromServer();
+    // text1 = await getTextFromServer();
+
     // String textr = text1.substring(9,text1.indexOf('h'));
     // text1 = textr;
     // String textf = splitText(text1) as String;
 
-    splitText(text1);
-    print('text : '+text1);
+    // splitText(text1);
+    // print('text : '+text1);
   }
 }
 
 
 // get
-Future<String> getTextFromServer() async {
-  try {
-    Dio dio = new Dio();
-    Response response = await dio.get('https://a2c9-14-45-91-84.ngrok-free.app/Korean/translate');
-  //  var jsonbody = json.decode(response.data);
-  //  return jsonbody['answer'];
-  return response.data.toString();
-  } catch (e) {
-    print(e);
-    return 'error';
-  }
-}
-
-// split func
-Future<String> splitText(String texts) async {
-  String textr = texts.substring(10,texts.indexOf(","));
-  textr = textr.substring(0,textr.length-1);
-  text1 = textr;
-  return text1;
-}
+// Future<String> getTextFromServer() async {
+//   try {
+//     Dio dio = new Dio();
+//     Response response = await dio.get('https://a2c9-14-45-91-84.ngrok-free.app/Korean/translate');
+//   //  var jsonbody = json.decode(response.data);
+//   //  return jsonbody['answer'];
+//   return response.data.toString();
+//   } catch (e) {
+//     print(e);
+//     return 'error';
+//   }
+// }
