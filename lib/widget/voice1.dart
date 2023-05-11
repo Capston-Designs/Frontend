@@ -11,7 +11,6 @@ import 'package:image_picker/image_picker.dart';
 
 class Voice1Screen extends StatefulWidget {
   const Voice1Screen({super.key});
-
   // 상태 관리
   @override
   _VoiceScreen1State createState() => _VoiceScreen1State();
@@ -29,7 +28,7 @@ class _VoiceScreen1State extends State<Voice1Screen>{
   Positioned build(BuildContext context)  {
     final TextEditingController controller = TextEditingController(text: text1);
     
-
+    // 사진 가져오기 image picker
     Future getImage(ImageSource imageSource) async{
       final pickedFile = await picker.getImage(source: imageSource);
 
@@ -54,7 +53,7 @@ class _VoiceScreen1State extends State<Voice1Screen>{
                 child: SizedBox(
                   width: 120,
                   height: 120,
-                    child: TextButton(
+                    child: TextButton( // camera button
                       child: const Text(" "),
                       onPressed: () async {
                         // getImage(ImageSource.camera);
@@ -78,7 +77,7 @@ class _VoiceScreen1State extends State<Voice1Screen>{
                   // String textf = text1.substring(6);
                   // String textf = text1.substring(6,11); 6-11까지
                   // String textf = text1.substring(11, str.indexOf(''')); 11부터 '까지
-                  child: Text(''+text1, //'$text1'
+                  child: Text('$text1', //'$text1' or ''+text1
                   style: const TextStyle(
                         fontFamily: 'SF Pro Text', 
                         fontSize: 20, 
@@ -88,6 +87,7 @@ class _VoiceScreen1State extends State<Voice1Screen>{
                 ),
               ),
 
+              // tts
               Positioned(
                 top: 440,
                 left: 200,
