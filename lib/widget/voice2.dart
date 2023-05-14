@@ -143,10 +143,16 @@ Future<void> uploadImageToServer() async {
       Dio dio = new Dio();
       dio.options.headers['Content-Type'] = 'application/json';
       Response response = await dio.post(
-          'https://8226-211-199-34-171.ngrok-free.app/api/korean/',
+          'https://2d7a-220-122-54-34.ngrok-free.app/api/korean/',
           data: formData
       );
       text1 = response.toString();
+
+      // text 자르기
+      String textr = text1.substring(9,text1.indexOf("h"));
+      textr = textr.substring(0,textr.length-1);
+      text1 = textr;
+
       print(response);
     } catch (e) {
       print(e);
