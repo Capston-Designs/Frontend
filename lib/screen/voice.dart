@@ -21,9 +21,6 @@ class _VoiceScreen1State extends State<VoiceScreen> with TickerProviderStateMixi
   late File _image;
   final picker = ImagePicker();
 
-  // final FlutterTts tts = FlutterTts();
-  // final TextEditingController controller = TextEditingController(text: "hi");
-  // late TabController controller;
 
   late TabController tabController;
   int _tabIndex = 0;
@@ -35,7 +32,6 @@ class _VoiceScreen1State extends State<VoiceScreen> with TickerProviderStateMixi
       ..addListener(() {
         setState(() => _tabIndex = tabController.index);
       });
-
     super.initState();
   }
 

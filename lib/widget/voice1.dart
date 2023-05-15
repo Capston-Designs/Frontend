@@ -21,6 +21,11 @@ class _VoiceScreen1State extends State<Voice1Screen> {
   final picker = ImagePicker();
   String text1 = '';
   
+  @override
+  void dispose() {
+    text1 = ''; // text1 초기화
+    super.dispose();
+  }
 
   // 사진 가져오기 image picker
   Future<void> getImage(ImageSource imageSource) async {
@@ -36,7 +41,7 @@ class _VoiceScreen1State extends State<Voice1Screen> {
 
   Future<void> uploadImageToServer() async {
     final picker = ImagePicker();
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.getImage(source: ImageSource.gallery); // .camera로 변경 가능
 
     if (pickedFile != null) {
       File imageFile = File(pickedFile.path);
@@ -49,7 +54,7 @@ class _VoiceScreen1State extends State<Voice1Screen> {
         Dio dio = new Dio();
         dio.options.headers['Content-Type'] = 'application/json';
         Response response = await dio.post(
-          'https://2d7a-220-122-54-34.ngrok-free.app/api/braille/',
+          'https://a100-121-182-77-4.ngrok-free.app/api/braille/',
           data: formData,
         );
         text1 = response.toString();
@@ -131,7 +136,6 @@ class _VoiceScreen1State extends State<Voice1Screen> {
                       await ftts.setPitch(1); //pitc of sound
 
                       //play text to sp
-                      // var result = await ftts.speak("Hello World, this is Flutter Campus.");
                       var result = await ftts.speak(controller.text);
                       if(result == 1){
                           //speaking
