@@ -22,9 +22,8 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.light,
         primaryColor: Colors.pink[200], colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.white),
         ),
-      home: const TutoFirstScreen(),
-      // home: const VoiceWidget(),
-      // home: VoiceScreen(),
+      // home: const TutoFirstScreen(),
+      home: OpenScreen(),
     );
   }
 }
