@@ -33,9 +33,6 @@ class _VoiceScreen1State extends State<Voice1Screen> {
 
     setState(() {
       _image = File(pickedFile!.path);
-      // _image == "null"
-      //   ? getImage(ImageSource.camera)
-      //   : upload(_image);
     });
   }
 
@@ -54,7 +51,7 @@ class _VoiceScreen1State extends State<Voice1Screen> {
         Dio dio = new Dio();
         dio.options.headers['Content-Type'] = 'application/json';
         Response response = await dio.post(
-          'https://a100-121-182-77-4.ngrok-free.app/api/braille/',
+          'https://d9f5-121-182-41-19.ngrok-free.app/api/braille/',
           data: formData,
         );
         text1 = response.toString();

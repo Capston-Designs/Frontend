@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:image_picker/image_picker.dart';
 
-/* 점자 */
+/* 묵자 */
 
 class Voice2Screen extends StatefulWidget {
   const Voice2Screen({super.key});
@@ -18,12 +18,16 @@ class Voice2Screen extends StatefulWidget {
 
 
 class _VoiceScreen2State extends State<Voice2Screen>{
-
   FlutterTts ftts = FlutterTts();
   late File _image;
   final picker = ImagePicker();
   String text1 = '';
   
+  @override
+  void dispose() {
+    text1 = ''; // text1 초기화
+    super.dispose();
+  }
 
   // 사진 가져오기 image picker
   Future<void> getImage(ImageSource imageSource) async {
@@ -31,15 +35,12 @@ class _VoiceScreen2State extends State<Voice2Screen>{
 
     setState(() {
       _image = File(pickedFile!.path);
-      // _image == "null"
-      //   ? getImage(ImageSource.camera)
-      //   : upload(_image);
     });
   }
 
   Future<void> uploadImageToServer() async {
     final picker = ImagePicker();
-    final pickedFile = await picker.getImage(source: ImageSource.gallery); // .camera로 변경 가능
+    final pickedFile = await picker.getImage(source: ImageSource.camera); // .camera로 변경 가능
 
     if (pickedFile != null) {
       File imageFile = File(pickedFile.path);
@@ -52,7 +53,7 @@ class _VoiceScreen2State extends State<Voice2Screen>{
         Dio dio = new Dio();
         dio.options.headers['Content-Type'] = 'application/json';
         Response response = await dio.post(
-          'https://a100-121-182-77-4.ngrok-free.app/api/korean/',
+          'https://d9f5-121-182-41-19.ngrok-free.app/api/korean/',
           data: formData,
         );
         text1 = response.toString();
