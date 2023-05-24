@@ -53,13 +53,13 @@ class _VoiceScreen2State extends State<Voice2Screen>{
         Dio dio = new Dio();
         dio.options.headers['Content-Type'] = 'application/json';
         Response response = await dio.post(
-          'https://d9f5-121-182-41-19.ngrok-free.app/api/korean/',
+          'https://ae30-121-182-5-150.ngrok-free.app/api/korean/',
           data: formData,
         );
         text1 = response.toString();
 
         // text 자르기
-        String textr = text1.substring(9, text1.indexOf("h"));
+        String textr = text1.substring(9, text1.indexOf("}"));
         textr = textr.substring(0, textr.length - 1);
         text1 = textr;
 
@@ -74,35 +74,31 @@ class _VoiceScreen2State extends State<Voice2Screen>{
   
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      child: Container(
-        child: Stack(
-          children: <Widget>[
-            Image.asset('assets/images/voice1.png'),
-            Positioned(
-              top: 440,
-              left: 45,
-              child: StatefulBuilder(builder: (context, setState) {
-                return SizedBox(
-                  width: 120,
-                  height: 120,
-                  child: TextButton(
-                    // camera button
-                    child: const Text(" "),
-                    onPressed: () async {
-                      uploadImageToServer();
-                    },
-                  ),
-                );
-              }),
+    return Container(
+      child: Stack(
+        children: <Widget>[
+          Image.asset('assets/images/voice1.png'),
+          Positioned(
+            top: 440,
+            left: 45,
+            child: SizedBox(
+              width: 120,
+              height: 120,
+              child: TextButton(
+                // camera button
+                child: const Text(" "),
+                onPressed: () async {
+                  uploadImageToServer();
+                },
+              ),
             ),
-
+          ),
             // text field
             Positioned(
               top: 20,
               left: 20,
               child: SizedBox(
-                width: 350,
+                width: 330,
                 height: 400,
                 child: Text(
                   '$text1',
@@ -147,7 +143,6 @@ class _VoiceScreen2State extends State<Voice2Screen>{
               ),
             ],
         ),
-      ),
-    );
+      );
   }
 }
