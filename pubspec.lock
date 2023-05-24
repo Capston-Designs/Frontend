@@ -376,14 +376,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.4"
-  refresh:
-    dependency: "direct main"
-    description:
-      name: refresh
-      sha256: cbf2254cd1a54135855c9a544af1e1c25472781a9f2c973e56b2068907d669dc
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.1"
   shared_preferences:
     dependency: "direct main"
     description:

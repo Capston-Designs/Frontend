@@ -249,7 +249,7 @@ class _VoiceScreen1State extends State<Voice1Screen> {
             top: 20,
             left: 20,
             child: SizedBox(
-              width: 350,
+              width: 330,
               height: 400,
               child: Text(
                 '$text1',
