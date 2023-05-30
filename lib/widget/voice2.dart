@@ -53,7 +53,7 @@ class _VoiceScreen2State extends State<Voice2Screen>{
         Dio dio = new Dio();
         dio.options.headers['Content-Type'] = 'application/json';
         Response response = await dio.post(
-          'https://ae30-121-182-5-150.ngrok-free.app/api/korean/',
+          'https://e1e3-210-123-132-243.ngrok-free.app/api/korean/',
           data: formData,
         );
         text1 = response.toString();
